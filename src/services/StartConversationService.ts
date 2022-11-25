@@ -10,13 +10,15 @@ class StartConversationService {
         throw new Error('Error on execute start conversation');
       }
 
-      const botResponse = await axios.post(BOT_URL, {
+      const response = await axios.post<BotResponse>(BOT_URL, {
         message: 'Olá',
       });
 
-      return botResponse.data;
+      const botResponse = response.data;
+
+      return botResponse;
     } catch (error: Error | any) {
-      console.log('[StartConversationService]: error -> ', error);
+      console.log('[StartConversationService.execute] error -> ', error);
       throw new Error(error.response.data.message);
     }
   }

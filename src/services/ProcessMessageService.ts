@@ -10,13 +10,15 @@ class ProcessMessageService {
         throw new Error('Error on execute process message');
       }
 
-      const botResponse = await axios.post(BOT_URL, {
+      const response = await axios.post<BotResponse>(BOT_URL, {
         message,
       });
 
-      return botResponse.data;
+      const botResponse = response.data;
+
+      return botResponse;
     } catch (error: Error | any) {
-      console.log('[ProcessMessageService]: error -> ', error);
+      console.log('[ProcessMessageService.execute] error -> ', error);
       throw new Error(error.response.data.message);
     }
   }
