@@ -19,6 +19,7 @@
   ],
   "rules": {
     "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
       "error"
