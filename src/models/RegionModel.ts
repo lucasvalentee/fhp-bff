@@ -40,6 +40,10 @@ class RegionModel {
 
     return RegionModel.INSTANCE;
   }
+
+  public isRegionFilled(): boolean {
+    return !!(this.cityId && this.countryStateId);
+  }
 }
 
 export default RegionModel;
