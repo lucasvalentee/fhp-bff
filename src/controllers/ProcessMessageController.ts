@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import RegionModel from '../models/RegionModel';
 import ProcessMessageService from '../services/ProcessMessageService';
 import SearchProfessionalsService from '../services/SearchProfessionalsService';
 
