@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import RegionModel from '../models/RegionModel';
 import ProcessMessageService from '../services/ProcessMessageService';
+import SearchProfessionalsService from '../services/SearchProfessionalsService';
 
 class ProcessMessageController {
   async handle(request: Request, response: Response): Promise<Response> {
@@ -8,13 +9,8 @@ class ProcessMessageController {
 
     let botResponse = await ProcessMessageService.execute(message);
 
-    if (
-      botResponse.intent.startsWith('profissional') &&
-      !RegionModel.getInstance().isRegionFilled()
-    ) {
-      botResponse = await ProcessMessageService.execute(
-        'solicitacao.informar_regiao',
-      );
+    if (botResponse.intent.startsWith('profissional')) {
+      botResponse = await SearchProfessionalsService.process(botResponse);
     }
 
     return response.status(200).json(botResponse);
