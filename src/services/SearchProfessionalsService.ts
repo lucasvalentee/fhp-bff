@@ -27,12 +27,15 @@ class SearchProfessionalsService {
         `${BACKEND_URL}/specialties/findByName/${specialtyName}`,
       );
 
+      console.log(specialtyResponse.data);
+
       if (!specialtyResponse.data) {
         return {
           answer:
-            'Desculpe, não existem profissionais cadastrados para essa especialidade.',
-          intent: 'profissional.nao_existe',
+            'Desculpe, não existem profissionais cadastrados para essa especialidade. Você pode tentar novamente buscando por outra especialidade.',
+          intent: 'solicitacao.nao_existe_especialidade',
           lastIntent: currentBotResponse.lastIntent,
+          options: ['showRegionInputs'],
         };
       }
 
@@ -44,12 +47,16 @@ class SearchProfessionalsService {
         }`,
       );
 
-      if (!serviceLocationsResponse.data) {
+      if (
+        !serviceLocationsResponse.data ||
+        !serviceLocationsResponse.data?.length
+      ) {
         return {
           answer:
-            'Desculpe, não existem profissionais cadastrados para essa especialidade na região desejada.',
-          intent: 'profissional.nao_existe',
+            'Desculpe, não existem profissionais cadastrados para essa especialidade na região desejada. Por favor, tente novamente:',
+          intent: 'solicitacao.nao_encontrou_tente_novamente',
           lastIntent: currentBotResponse.lastIntent,
+          options: ['showRegionInputs'],
         };
       }
 
